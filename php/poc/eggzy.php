@@ -1,9 +1,9 @@
 <html>
 <head>
- <script type="text/javascript" src="jquery.min.js"></script>
-<script type="text/javascript" src="createjs.min.js"></script>
+ <script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/createjs.min.js"></script>
 
-<script type="text/javascript" src="eggzy.js"></script>
+<script type="text/javascript" src="js/eggzy.js"></script>
 </head>        
 <body >
         <div class="canvasContainer">
