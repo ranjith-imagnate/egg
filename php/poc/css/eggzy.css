@@ -20,7 +20,7 @@
 }
 .eggzy-canvas-wrapper{
     height: 665px;
-    overflow: auto;
+    overflow: hidden;
     width: 100%;
 }
 .eggzy-game-canvas {
