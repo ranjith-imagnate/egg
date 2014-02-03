@@ -8,8 +8,7 @@
 </head>        
 <body >
         <div class="canvasContainer">
-            <canvas id="mycanvas" width="600" height="1000" style="background:#CFB145; border:1px solid;"></canvas>
-            
+            <canvas id="mycanvas" width="600" height="3000" style="background:#CFB145; border:1px solid;"></canvas>
        </div>
        
     </body>
