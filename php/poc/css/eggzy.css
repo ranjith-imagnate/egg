@@ -1,0 +1,48 @@
+
+.eggzy-game-wrapper{
+    border: 1px solid red;
+    border-radius: 3px;
+    height: 720px;
+    left: 25px;
+    /*overflow: hidden;*/
+    position: relative;
+    right: 0;
+    top: 95px;
+    width: 895px;
+}
+.eggzy-game-headr{
+    background: linear-gradient(to top, #B3B3B3 -60%, #F5F5F5 100%) repeat scroll 0 0;
+    background: -moz-linear-gradient(to top, #B3B3B3 -60%, #F5F5F5 100%) repeat scroll 0 0;
+    background: -webkit-linear-gradient(to top, #B3B3B3 -60%, #F5F5F5 100%) repeat scroll 0 0;
+    height: 55px;
+    position: relative;
+    width: 100%;
+}
+.eggzy-canvas-wrapper{
+    height: 665px;
+    overflow: auto;
+    width: 100%;
+}
+.eggzy-game-canvas {
+    margin: auto;
+    width: 712px;
+}
+.canvas-bg{
+    background-image: url("../img/bg-partern.jpg");
+    background-repeat: repeat;
+    float: left;
+    height: auto;
+    width: 704px;
+}
+.left-sidebar-bg{
+    background-image: url("../img/left-bg.jpg");
+    float: left;
+    height: 862px;
+    width: 83px;
+}
+.right-sidebar-bg{
+    background-image: url("../img/right-bg.jpg");
+    float: left;
+    height: 862px;
+    width: 91px;
+}
