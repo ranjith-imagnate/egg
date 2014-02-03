@@ -2,6 +2,7 @@
 <head>
  <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/createjs.min.js"></script>
+<script type="text/javascript" src="js/Collision.js"></script>
 
 <script type="text/javascript" src="js/eggzy.js"></script>
 </head>        
