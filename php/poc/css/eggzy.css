@@ -1,4 +1,9 @@
 
+body,html{
+    min-height:100%;
+    height:auto;
+    margin: 0px;
+}
 .eggzy-game-wrapper{
     border: 1px solid red;
     border-radius: 3px;
@@ -36,13 +41,15 @@
 }
 .left-sidebar-bg{
     background-image: url("../img/left-bg.jpg");
+    background-repeat: repeat-y;
     float: left;
-    height: 862px;
+    height: 100%;
     width: 83px;
 }
 .right-sidebar-bg{
     background-image: url("../img/right-bg.jpg");
+    background-repeat: repeat-y;
     float: left;
-    height: 862px;
+    height: 100%;
     width: 91px;
 }
