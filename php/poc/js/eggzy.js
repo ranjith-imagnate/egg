@@ -7,9 +7,15 @@ var eggHoldingNest = 0;
 var eggFallingYPosition = 500;
 var eggFallingSpeed = 700;
 var initialXPosition, initialYPosition;
+var scroll = 3000;
+var jump = 1;
+var firstScroll = true;
 $(document).ready(function() {
+    $(".eggzy-canvas-wrapper").bind("mousewheel", function() {
+         return false;
+     });
     init();
-
+    $('.eggzy-canvas-wrapper').scrollTop(scroll);
 });
 function init()
 {
@@ -133,6 +139,7 @@ function onTweenComplete()
         eggHoldingNest = eggHoldingNest + 1;
         eggFallingYPosition = eggFallingYPosition + 350 - 50;
         eggFallingSpeed = eggFallingSpeed + 200;
+        jump++;
     }
     else if ((nestArr[eggHoldingNest + 2].x - nestArr[eggHoldingNest].x) <= 30 && (nestArr[eggHoldingNest + 2].x - nestArr[eggHoldingNest].x) >= -30)
     {
@@ -141,12 +148,26 @@ function onTweenComplete()
         eggHoldingNest = eggHoldingNest + 2;
         eggFallingYPosition = eggFallingYPosition + 350 - 50;
         eggFallingSpeed = eggFallingSpeed + 200;
+        jump++;
     }
     else
     {
         createjs.Tween.get(egg).to({y: eggFallingYPosition, visible: true}, eggFallingSpeed).call(fallingDownEgg);
 
     }
+    if(jump==3)
+        {
+            if(firstScroll)
+            {    
+               scroll = scroll - 1200;
+               firstScroll = false;
+            }   
+            else
+                scroll = scroll - 500;
+            $('.eggzy-canvas-wrapper').animate({scrollTop:scroll});
+            jump=1;
+        }
+    
 
 }
 /*
