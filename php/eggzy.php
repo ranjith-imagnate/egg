@@ -50,7 +50,7 @@
             <div class="eggzy-canvas-wrapper">
                 <div class="left-sidebar-bg"> </div>
                 <div class="eggzy-game-canvas">
-                    <canvas id="mycanvas" width="720" height="3000" class="canvas-bg" style=""></canvas>
+                    <canvas id="mycanvas" width="720" height="2000" class="canvas-bg" style=""></canvas>
                 </div>
                 <div class="right-sidebar-bg"> </div>
             </div>

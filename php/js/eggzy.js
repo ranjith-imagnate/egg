@@ -1,32 +1,46 @@
 var canvas, stage, queue, egg;
 var nestArr = [];
-var stableNest = [0, 6, 13];
+var stableNest = [0, 6, 13, 15];
 var doubleNest = [3, 6, 9];
-var test = [0, 5, 10, 3, 6, 9];
+var movingNest = [0, 5, 10, 3, 6, 9];
+var slowMovingNest = [2,5,9,10];
 var eggHoldingNest = 0;
 var eggFallingYPosition = 500;
 var eggFallingSpeed = 700;
 var initialXPosition, initialYPosition;
-var scroll = 3000;
+var scroll = 2000;
 var jump = 1;
+var score = 0;
 var firstScroll = true;
+var diffBetNest = 150;
 $(document).ready(function() {
     $(".eggzy-canvas-wrapper").bind("mousewheel", function() {
-         return false;
-     });
+        return false;
+    });
+    $('canvas').click(function() {
+        jumpEgg();
+    });
+    $(document).keypress(function(event) {
+        if (event.which == 32)
+            jumpEgg();
+    });
+    initialize();
+
     init();
     $('.eggzy-canvas-wrapper').scrollTop(scroll);
 });
+function initialize()
+{
+    score = 0;
+    $('.score-btn label').html(score);
+}
 function init()
 {
     canvas = document.getElementById("mycanvas");
     stage = new createjs.Stage(canvas);
     createjs.Ticker.setFPS(500);
-//    stage.on('mousedown',function(){
-//        jumpEgg();
-//    });
     initialXPosition = stage.canvas.width;
-    initialYPosition = stage.canvas.height - 100;
+    initialYPosition = stage.canvas.height - 70;
     createjs.Ticker.addEventListener("tick", stage);
     queue = new createjs.LoadQueue();
     queue.loadManifest([
@@ -37,22 +51,20 @@ function init()
     makeEgg();
     makeNest();
     addNestToStage();
-//    cont.addChild(egg);
-//    stage.addChild(cont);
-//    stage.update();
+
 }
 /*
  * Function for creating nest and setting its x,y position
  */
 function makeNest()
 {
-    //var image = queue.getResult(0).src;
     var j = 0;
+    var stableNestXPosition = stage.canvas.width / 2 - 30;
     for (var i = 0; i < 12; i++) {
         var cont = new createjs.Container();
         var nest = new createjs.Bitmap("img/nest.png");
         cont.addChild(nest);
-        cont.x = 200;
+        cont.x = stableNestXPosition;
         cont.y = initialYPosition;
         cont.id = j;
         j++;
@@ -62,30 +74,32 @@ function makeNest()
         });
         if (doubleNest.indexOf(i) != -1)
         {
-            console.log(i);
             var cont = new createjs.Container();
             var nest = new createjs.Bitmap("img/nest.png");
             cont.addChild(nest);
             cont.x = 0;
             cont.y = initialYPosition;
+
             nestArr.push(cont);
             cont.id = j;
-            cont.on('mousedown', function() {
-                jumpEgg();
-            });
+            nestArr[j - 1].x = stage.canvas.width - 130;
+
             j++;
         }
-        if (test.indexOf(i) == -1)
+
+        if (movingNest.indexOf(i) == -1)
             cont.x = 0;
-        if(doubleNest.indexOf(i) == -1 && stableNest.indexOf(i)==-1 && i%2==0)
-            cont.x = 500;
-        initialYPosition = initialYPosition - 250;
-
-
+        if (doubleNest.indexOf(i) == -1 && stableNest.indexOf(j - 1) == -1 && i % 2 == 0)
+            cont.x = canvas.width - 135;
+        initialYPosition = initialYPosition - diffBetNest;
     }
-    //return cont;
-    //stage.addChild(nest);
-    //stage.update();
+    var cont = new createjs.Container();
+    var nest = new createjs.Bitmap("img/hole-nest.png");
+    cont.addChild(nest);
+    cont.x = stage.canvas.width / 2 - 70;
+    cont.y = initialYPosition - 50;
+    cont.id = j;
+    nestArr.push(cont);
 }
 /*
  * Function for creating egg
@@ -93,11 +107,9 @@ function makeNest()
 function makeEgg()
 {
     egg = new createjs.Bitmap("img/white-egg.png");
-    //egg.name = "egg";
     egg.x = 50;
     egg.y = -50;
-//    stage.addChild(egg);
-    //stage.update();
+
 }
 function tick()
 {
@@ -108,15 +120,11 @@ function tick()
  */
 function jumpEgg()
 {
-    // var child = stage.getChildByName('egg');
+    $('canvas').off('click');
+    $(document).off('keypress');
     var child = nestArr[eggHoldingNest];
     stage.setChildIndex(child, stage.getNumChildren() - 1);
-
-    //stage.update();
-//    egg.regX = egg.image.width/2;
-//    egg.regY = egg.image.height/2;
-//   createjs.Tween.get(egg).to({visible: true, rotation:-360}, 100).call(onTweenComplete);
-    createjs.Tween.get(egg).to({y: -350, visible: true}, 500).call(onTweenComplete);
+    createjs.Tween.get(egg).to({y: -250, visible: true}, 200).call(onTweenComplete);
 
 }
 /*
@@ -124,50 +132,39 @@ function jumpEgg()
  */
 function onTweenComplete()
 {
-    //nestArr[0].removeChild(egg);
-    // egg.x = egg.x-400;
-    //var child = stage.getChildByName('egg');
-    //var intersection = checkIntersection(egg,nestArr[1]);
-    //            console.log(nestArr[1].x);
-    //            console.log(nestArr[0].x);
-    //var intersection = ndgmr.checkRectCollision(egg,nestArr[1]);
-    //console.log(intersection);
-    if ((nestArr[eggHoldingNest + 1].x - nestArr[eggHoldingNest].x) <= 30 && (nestArr[eggHoldingNest + 1].x - nestArr[eggHoldingNest].x) >= -30)
+    var targetNest;
+    if (targetNest = checkIntersection())
     {
-        egg.y = egg.y + 350 - 50;
-        nestArr[eggHoldingNest + 1].addChild(egg);
-        eggHoldingNest = eggHoldingNest + 1;
-        eggFallingYPosition = eggFallingYPosition + 350 - 50;
+        egg.y = egg.y + 250 - 50;
+        nestArr[eggHoldingNest + targetNest].addChild(egg);
+        eggHoldingNest = eggHoldingNest + targetNest;
+        eggFallingYPosition = eggFallingYPosition + 250 - 50;
         eggFallingSpeed = eggFallingSpeed + 200;
         jump++;
-    }
-    else if ((nestArr[eggHoldingNest + 2].x - nestArr[eggHoldingNest].x) <= 30 && (nestArr[eggHoldingNest + 2].x - nestArr[eggHoldingNest].x) >= -30)
-    {
-        egg.y = egg.y + 350 - 50;
-        nestArr[eggHoldingNest + 2].addChild(egg);
-        eggHoldingNest = eggHoldingNest + 2;
-        eggFallingYPosition = eggFallingYPosition + 350 - 50;
-        eggFallingSpeed = eggFallingSpeed + 200;
-        jump++;
+        score = score + 1000;
+        $('.score-btn label').html(score);
+        resetEvent();
+
     }
     else
     {
         createjs.Tween.get(egg).to({y: eggFallingYPosition, visible: true}, eggFallingSpeed).call(fallingDownEgg);
 
     }
-    if(jump==3)
+    if (jump == 4)
+    {
+        if (firstScroll)
         {
-            if(firstScroll)
-            {    
-               scroll = scroll - 1200;
-               firstScroll = false;
-            }   
-            else
-                scroll = scroll - 500;
-            $('.eggzy-canvas-wrapper').animate({scrollTop:scroll});
-            jump=1;
+            scroll = scroll - 1030;
+            firstScroll = false;
         }
-    
+        else
+            scroll = scroll - 450;
+        $('.eggzy-canvas-wrapper').animate({scrollTop: scroll});
+        jump = 1;
+    }
+
+
 
 }
 /*
@@ -175,16 +172,18 @@ function onTweenComplete()
  */
 function addNestToStage()
 {
-    for (var i = 0; i < 15; i++)
+    for (var i = 0; i < 16; i++)
     {
-        console.log(nestArr[i]);
+
+
         stage.addChild(nestArr[i]);
-        var xpositionFrom = (i==2 || i==10)?0:(nestArr[i].id == 4 || nestArr[i].id == 8 || nestArr[i].id == 12 ? canvas.width - 400 : canvas.width - 135);
-        var xpositionTo = i==2 || i==10 ?0:nestArr[i].x;
+        var xpositionFrom = (i == 2 || i == 10 || i == 5 || i == 3 || i == 7 || i == 11) ? 0 : (nestArr[i].id == 4 || nestArr[i].id == 8 || nestArr[i].id == 12 ? canvas.width - 135 : canvas.width - 135);
+        var xpositionTo = (i == 2 || i == 10) ? 0 : nestArr[i].x;
+        var nestSpeed = slowMovingNest.indexOf(i)!=-1?5500:5000;
         if (stableNest.indexOf(i) == -1) {
             createjs.Tween.get(nestArr[i], {loop: true})
-                    .to({x: xpositionFrom}, 2500)
-                    .to({x: nestArr[i].x}, 2500)
+                    .to({x: xpositionFrom}, nestSpeed)
+                    .to({x: nestArr[i].x}, nestSpeed)
         }
     }
     nestArr[0].addChild(egg);
@@ -194,4 +193,29 @@ function fallingDownEgg()
 {
     egg.y = -50;
     nestArr[eggHoldingNest].addChild(egg);
+    resetEvent();
+}
+function resetEvent()
+{
+    $('canvas').click(function() {
+        jumpEgg();
+    });
+    $(document).keypress(function(event) {
+        if (event.which == 32)
+            jumpEgg();
+    });
+}
+function checkIntersection()
+{
+    console.log(nestArr.length);
+    var x1Diff = nestArr[eggHoldingNest + 1].x - nestArr[eggHoldingNest].x;
+    var y1Diff = nestArr[eggHoldingNest + 1].y - nestArr[eggHoldingNest].y;
+    var x2Diff = eggHoldingNest!=nestArr.length-2?nestArr[eggHoldingNest + 2].x - nestArr[eggHoldingNest].x:0;
+    var y2Diff = eggHoldingNest!=nestArr.length-2?nestArr[eggHoldingNest + 2].y - nestArr[eggHoldingNest].y:0;
+    if ((x1Diff <= 30 && x1Diff >= -30 && y1Diff <= -diffBetNest))
+        return 1;
+    else if ((x2Diff <= 30 && x2Diff >= -30 && y2Diff <= -diffBetNest))
+        return 2;
+    else
+        return false;
 }
