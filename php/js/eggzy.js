@@ -6,14 +6,16 @@ var movingNest = [0, 5, 10, 3, 6, 9];
 var slowMovingNest = [2,5,9,10];
 var eggHoldingNest = 0;
 var eggFallingYPosition = 500;
-var eggFallingSpeed = 700;
+var eggFallingSpeed = 900;
 var initialXPosition, initialYPosition;
 var scroll = 2000;
 var jump = 1;
 var score = 0;
 var firstScroll = true;
 var diffBetNest = 150;
+var hintLines;
 $(document).ready(function() {
+    hintLines = $('.hint-line').length;
     $(".eggzy-canvas-wrapper").bind("mousewheel", function() {
         return false;
     });
@@ -38,7 +40,7 @@ function init()
 {
     canvas = document.getElementById("mycanvas");
     stage = new createjs.Stage(canvas);
-    createjs.Ticker.setFPS(500);
+    createjs.Ticker.setFPS(5000);
     initialXPosition = stage.canvas.width;
     initialYPosition = stage.canvas.height - 70;
     createjs.Ticker.addEventListener("tick", stage);
@@ -109,6 +111,7 @@ function makeEgg()
     egg = new createjs.Bitmap("img/white-egg.png");
     egg.x = 50;
     egg.y = -50;
+    
 
 }
 function tick()
@@ -124,7 +127,7 @@ function jumpEgg()
     $(document).off('keypress');
     var child = nestArr[eggHoldingNest];
     stage.setChildIndex(child, stage.getNumChildren() - 1);
-    createjs.Tween.get(egg).to({y: -250, visible: true}, 200).call(onTweenComplete);
+    createjs.Tween.get(egg).to({y: -250, visible: true}, 300).call(onTweenComplete);
 
 }
 /*
@@ -139,16 +142,23 @@ function onTweenComplete()
         nestArr[eggHoldingNest + targetNest].addChild(egg);
         eggHoldingNest = eggHoldingNest + targetNest;
         eggFallingYPosition = eggFallingYPosition + 250 - 50;
-        eggFallingSpeed = eggFallingSpeed + 200;
+        eggFallingSpeed = eggFallingSpeed + 400;
+        console.log(eggHoldingNest);
+        if(eggHoldingNest==15)
+        {    
+            egg.y = egg.y+85;
+            egg.x = egg.x+10;
+        }   
         jump++;
         score = score + 1000;
         $('.score-btn label').html(score);
+        changeGameFinishHint();
         resetEvent();
 
     }
     else
     {
-        createjs.Tween.get(egg).to({y: eggFallingYPosition, visible: true}, eggFallingSpeed).call(fallingDownEgg);
+        createjs.Tween.get(egg).wait(70).to({y: eggFallingYPosition, visible: true}, eggFallingSpeed).call(fallingDownEgg);
 
     }
     if (jump == 4)
@@ -162,6 +172,8 @@ function onTweenComplete()
             scroll = scroll - 450;
         $('.eggzy-canvas-wrapper').animate({scrollTop: scroll});
         jump = 1;
+        eggFallingYPosition = 500;
+        eggFallingSpeed = 900;
     }
 
 
@@ -175,8 +187,9 @@ function addNestToStage()
     for (var i = 0; i < 16; i++)
     {
 
-
+        
         stage.addChild(nestArr[i]);
+        //nestArr[i].cache(0, 0, 720, 5);
         var xpositionFrom = (i == 2 || i == 10 || i == 5 || i == 3 || i == 7 || i == 11) ? 0 : (nestArr[i].id == 4 || nestArr[i].id == 8 || nestArr[i].id == 12 ? canvas.width - 135 : canvas.width - 135);
         var xpositionTo = (i == 2 || i == 10) ? 0 : nestArr[i].x;
         var nestSpeed = slowMovingNest.indexOf(i)!=-1?5500:5000;
@@ -207,7 +220,6 @@ function resetEvent()
 }
 function checkIntersection()
 {
-    console.log(nestArr.length);
     var x1Diff = nestArr[eggHoldingNest + 1].x - nestArr[eggHoldingNest].x;
     var y1Diff = nestArr[eggHoldingNest + 1].y - nestArr[eggHoldingNest].y;
     var x2Diff = eggHoldingNest!=nestArr.length-2?nestArr[eggHoldingNest + 2].x - nestArr[eggHoldingNest].x:0;
@@ -218,4 +230,16 @@ function checkIntersection()
         return 2;
     else
         return false;
+}
+function changeGameFinishHint()
+{
+    hintLines--;
+    console.log(hintLines);
+    $('.hint-line').removeClass('selected-hint-line');
+    $(".game-finish-hint-bar div:nth-child("+hintLines+")").addClass("selected-hint-line");
+    if(hintLines == 1)
+     {   
+        $('canvas').off('click');
+        $(document).off('keypress');
+     }
 }

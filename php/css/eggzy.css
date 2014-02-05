@@ -227,11 +227,11 @@ body,html{
     background-color: #AA5D11;
     float: right;
     height: 1px;
-    margin: 0 0 13px 2px;
+    margin: 0 0 12px 2px;
     position: relative;
     right: 0;
-    top: 15px;
-    width: 5px;
+    top: 14px;
+    width: 10px;
 }
 .selected-hint-line{
     background-color: #000;

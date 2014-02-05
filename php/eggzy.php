@@ -47,7 +47,7 @@
                     <div class="egg"></div>
                     <div class="egg"></div>
                     <div class="egg"></div>
-                </div>
+                  </div>
             </div>
             <div class="eggzy-canvas-wrapper">
                 <div class="left-sidebar-bg"> </div>
@@ -56,6 +56,7 @@
                 </div>
                 <div class="right-sidebar-bg"> </div>
                 <div class="game-finish-hint-bar">
+                    <div class="hint-line"> </div>
                     <div class="hint-line"> </div>
                     <div class="hint-line"> </div>
                     <div class="hint-line"> </div>
