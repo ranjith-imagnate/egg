@@ -137,7 +137,7 @@ body,html{
     font-size: 19px;
     left: 41px;
     position: relative;
-    top: 10px;
+    top: 8px;
 }
 .buttons {
     background: linear-gradient(to top, #D57500 -60%,#E3B100  100%) repeat scroll 0 0;
@@ -146,19 +146,19 @@ body,html{
     border-radius: 5px;
     float: left;
     height: 39px;
-    left: -27px;
+    left: -4px;
     margin: 0 0 0 17px;
     position: relative;
-    top: 67px;
+    top: 11px;
     width: 130px;
 }
 .v-line {
     background-color: #B0B2B1;
     content: "";
-    height: 20px;
-    left: 22px;
+    height: 12px;
+    left: 21px;
     position: absolute;
-    top: -19px;
+    top: -12px;
     width: 2px;
 }
 .v-line2 {
@@ -173,44 +173,45 @@ body,html{
     width: 100px;
 }
 .play-btn{
-    background: url("../img/eggzy-spritesheet.png") no-repeat scroll -98px -87px;
-    height: 30px;
-    left: 0;
+    background: url("../img/eggzy-spritesheet.png") no-repeat scroll -58px -87px;
+    height: 25px;
+    left: 18px;
     position: absolute;
-    width: 30px;
+    top: 1px;
+    width: 25px;
 }
 .pause-btn{
     cursor: pointer;
-    height: 32px;
-    left: 0;
+    height: 28px;
+    left: 20px;
     position: absolute;
-    width: 25px;
+    width: 20px;
 }
 
 .vertical-line-first {
     background-color: #F4EE3C;
     border-radius: 2px;
     float: left;
-    height: 28px;
-    margin:4px 3px 0 4px;
+    height: 20px;
+    margin: 4px 0 0 4px;
     width: 4px;
 }
 .sounds{
-    height: 38px;
+    cursor: pointer;
+    height: 28px;
     position: absolute;
     right: 24px;
-    width: 35px;
-    cursor: pointer;
+    width: 25px;
 }
 .mute-sound{
-    background: url("../img/eggzy-spritesheet.png") no-repeat scroll -50px -85px;
+    background: url("../img/eggzy-spritesheet.png") no-repeat scroll -30px -85px;
 }
 .unmute-sound{
-    background: url("../img/eggzy-spritesheet.png") no-repeat scroll -6px -87px;
+    background: url("../img/eggzy-spritesheet.png") no-repeat scroll -3px -86px;
 }
 
 .game-finish-hint-bar{
-      background-color: #E1AC00;
+    background-color: #E1AC00;
     border-radius: 10px;
     bottom: 0;
     height: 265px;
@@ -218,21 +219,31 @@ body,html{
     position: absolute;
     right: 93px;
     top: 0;
-    width: 15px;
+    width: 10px;
 }
 
 .hint-line {
     background-color: #AA5D11;
     float: right;
     height: 1px;
-    margin: 0 0 20px 1px;
+    margin: 0 0 20px 2px;
     position: relative;
     right: 0;
     top: 18px;
-    width: 7px;
+    width: 5px;
 }
 .selected-hint-line{
     background-color: #000;
+}
+.button-area {
+    height: 51px;
+    left: 0;
+    margin: auto;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 55px;
+    width: 300px;
 }
 /*.timing-icon:after{
     background-color: #B0B2B1;

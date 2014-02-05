@@ -18,15 +18,17 @@
                     <span>High score:</span>
                     <span id="high_score">0</span>
                 </div>
-                <div class="buttons timing-btn"> 
-                    <div class="v-line"></div>
-                    <div class=" v-line v-line2"></div>
-                    <label>00</label><label>:</label> <label>00</label><label>:</label><label>00</label>
-                </div>
-                <div class="buttons score-btn">
-                    <div class="v-line"></div>
-                    <div class=" v-line v-line2"></div>
-                    <label>000000</label>
+                <div class="button-area"> 
+                    <div class="buttons timing-btn"> 
+                        <div class="v-line"></div>
+                        <div class=" v-line v-line2"></div>
+                        <label>00</label><label>:</label><label>00</label><label>:</label><label>00</label>
+                    </div>
+                    <div class="buttons score-btn">
+                        <div class="v-line"></div>
+                        <div class=" v-line v-line2"></div>
+                        <label>000000</label>
+                    </div>
                 </div>
                 <div class="misscount-block"> 
                     <div class="egg miss-egg"></div>
