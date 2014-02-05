@@ -83,13 +83,16 @@ body,html{
     right: 88px;
     width: 178px;
 }
-.miss-egg{
+.egg{
     background: url("../img/eggzy-spritesheet.png") no-repeat scroll -28px 0 rgba(0, 0, 0, 0);
     float: left;
     height: 24px;
     position: relative;
     top: 3px;
     width: 22px;
+}
+.miss-egg{
+    background: url("../img/eggzy-spritesheet.png") no-repeat scroll -3px 0;
 }
 .level-btn{
     background: url("../img/eggzy-spritesheet.png") no-repeat scroll 1px -127px rgba(0, 0, 0, 0);
@@ -130,11 +133,11 @@ body,html{
 }
 .buttons label {
     color: #FFF;
-font-family: arial;
-font-size: 19px;
-left: 41px;
-position: relative;
-top: 10px;
+    font-family: arial;
+    font-size: 19px;
+    left: 41px;
+    position: relative;
+    top: 10px;
 }
 .buttons {
     background: linear-gradient(to top, #D57500 -60%,#E3B100  100%) repeat scroll 0 0;
@@ -204,6 +207,32 @@ top: 10px;
 }
 .unmute-sound{
     background: url("../img/eggzy-spritesheet.png") no-repeat scroll -6px -87px;
+}
+
+.game-finish-hint-bar{
+      background-color: #E1AC00;
+    border-radius: 10px;
+    bottom: 0;
+    height: 265px;
+    margin: auto;
+    position: absolute;
+    right: 93px;
+    top: 0;
+    width: 15px;
+}
+
+.hint-line {
+    background-color: #AA5D11;
+    float: right;
+    height: 1px;
+    margin: 0 0 20px 1px;
+    position: relative;
+    right: 0;
+    top: 18px;
+    width: 7px;
+}
+.selected-hint-line{
+    background-color: #000;
 }
 /*.timing-icon:after{
     background-color: #B0B2B1;

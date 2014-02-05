@@ -29,22 +29,22 @@
                     <label>000000</label>
                 </div>
                 <div class="misscount-block"> 
-                    <div class="miss-egg"></div>
-                    <div class="miss-egg"></div>
-                    <div class="miss-egg"></div>
-                    <div class="miss-egg"></div>
-                    <div class="miss-egg"></div>
-                    <div class="miss-egg"></div>
-                    <div class="miss-egg"></div>
-                    <div class="miss-egg"></div>
-                    <div class="miss-egg"></div>
-                    <div class="miss-egg"></div>
-                    <div class="miss-egg"></div>
-                    <div class="miss-egg"></div>
-                    <div class="miss-egg"></div>
-                    <div class="miss-egg"></div>
-                    <div class="miss-egg"></div>
-                    <div class="miss-egg"></div>
+                    <div class="egg miss-egg"></div>
+                    <div class="egg"></div>
+                    <div class="egg"></div>
+                    <div class="egg"></div>
+                    <div class="egg"></div>
+                    <div class="egg"></div>
+                    <div class="egg"></div>
+                    <div class="egg"></div>
+                    <div class="egg"></div>
+                    <div class="egg"></div>
+                    <div class="egg"></div>
+                    <div class="egg"></div>
+                    <div class="egg"></div>
+                    <div class="egg"></div>
+                    <div class="egg"></div>
+                    <div class="egg"></div>
                 </div>
             </div>
             <div class="eggzy-canvas-wrapper">
@@ -53,6 +53,20 @@
                     <canvas id="mycanvas" width="720" height="3000" class="canvas-bg" style=""></canvas>
                 </div>
                 <div class="right-sidebar-bg"> </div>
+                <div class="game-finish-hint-bar">
+                    <div class="hint-line"> </div>
+                    <div class="hint-line"> </div>
+                    <div class="hint-line"> </div>
+                    <div class="hint-line"> </div>
+                    <div class="hint-line"> </div>
+                    <div class="hint-line"> </div>
+                    <div class="hint-line"> </div>
+                    <div class="hint-line"> </div>
+                    <div class="hint-line"> </div>
+                    <div class="hint-line"> </div>
+                    <div class="hint-line"> </div>
+                    <div class="hint-line selected-hint-line"> </div>
+                </div>
             </div>
 
             <div class="sound-btn-area">
