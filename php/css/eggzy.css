@@ -49,6 +49,7 @@ body,html{
 .right-sidebar-bg{
     background-image: url("../img/right-bg.jpg");
     background-repeat: repeat-y;
+    background-position: 0 21px;
     float: left;
     height: 2996px;
     width: 91px;
@@ -108,7 +109,7 @@ body,html{
     font-size: 26px;
     font-weight: bold;
     height: 10px;
-    left: 15px;
+    left: 0px;
     margin: auto;
     position: absolute;
     right: 0;
