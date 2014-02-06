@@ -7,7 +7,8 @@ body,html{
 .eggzy-game-wrapper{
     border-radius: 3px;
     height: 628px;
-    left: 25px;
+    left: 0;
+    margin: auto;
     position: relative;
     right: 0;
     top: 95px;
@@ -255,3 +256,29 @@ body,html{
     top: -19px;
     width: 2px;
 }*/
+
+@media (min-width:979px) and (max-width:1024px){
+
+
+
+}
+@media (min-width: 767px) and (max-width: 979px){
+
+    .eggzy-game-wrapper{
+        width: 767px !important;
+    }
+    .eggzy-game-canvas{
+        width:707px !important;
+    }
+    .canvas-bg{
+        width:705px !important;
+    }
+    .left-sidebar-bg {
+        width: 30px !important;
+    }
+    .right-sidebar-bg {
+        width: 30px !important;
+    }
+
+
+}
