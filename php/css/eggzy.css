@@ -44,7 +44,7 @@ body,html{
     background-position: 0 232px;
     background-repeat: repeat-y;
     float: left;
-    height: 2996px;
+    height: 1997px;
     width: 83px;
 }
 .right-sidebar-bg{
@@ -52,7 +52,7 @@ body,html{
     background-repeat: repeat-y;
     background-position: 0 21px;
     float: left;
-    height: 2996px;
+    height: 1997px;
     width: 91px;
 }
 
@@ -228,11 +228,11 @@ body,html{
     background-color: #AA5D11;
     float: right;
     height: 1px;
-    margin: 0 0 13px 2px;
+    margin: 0 0 12px 2px;
     position: relative;
     right: 0;
-    top: 15px;
-    width: 5px;
+    top: 14px;
+    width: 10px;
 }
 .selected-hint-line{
     background-color: #000;
