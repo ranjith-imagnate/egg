@@ -288,5 +288,9 @@ body,html{
     .eggzy-game-headr{
         width:100% !important;
     }
+    .game-finish-hint-bar{
+        right:5px !important;
+        top: -60px !important;
+    }
 
 }
