@@ -268,17 +268,25 @@ body,html{
         width: 767px !important;
     }
     .eggzy-game-canvas{
-        width:707px !important;
+        width:720px !important;
     }
     .canvas-bg{
-        width:705px !important;
+        width:719px !important;
     }
     .left-sidebar-bg {
-        width: 30px !important;
+        width: 24px !important;
+        background-size: 30px auto;
+        background-position: 0 330px !important;
     }
     .right-sidebar-bg {
-        width: 30px !important;
+        width: 24px !important;
+        background-size: 35px auto;
     }
-
+    .misscount-block{
+        right: 10px !important;
+    }
+    .eggzy-game-headr{
+        width:100% !important;
+    }
 
 }
