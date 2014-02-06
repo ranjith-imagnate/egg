@@ -22,7 +22,7 @@
                     <div class="buttons timing-btn"> 
                         <div class="v-line"></div>
                         <div class=" v-line v-line2"></div>
-                        <label>00</label><label>:</label><label>00</label><label>:</label><label>00</label>
+                        <label id="hours">00</label><label>:</label><label id="mins">00</label><label>:</label><label id="sec">00</label>
                     </div>
                     <div class="buttons score-btn">
                         <div class="v-line"></div>
@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="misscount-block"> 
-                    <div class="egg miss-egg"></div>
+                    <div class="egg"></div>
                     <div class="egg"></div>
                     <div class="egg"></div>
                     <div class="egg"></div>
@@ -73,8 +73,8 @@
             </div>
 
             <div class="sound-btn-area">
-                <div class="play-btn" style="display: none"></div>
-                <div class="pause-btn">
+                <div class="play-btn" style="display: none" id="play_button"></div>
+                <div class="pause-btn" id="pause_button">
                     <span class="vertical-line-first"></span>
                     <span class="vertical-line-first"></span>
                 </div>
