@@ -14,6 +14,11 @@ var score = 0;
 var firstScroll = true;
 var diffBetNest = 150;
 var hintLines;
+var missedCount = 0;
+var timeEvent,isPaused = false;
+var timeElapsed = 0;
+var goldenEgg;
+var goldenEggArr = [15,6,3];
 $(document).ready(function() {
     hintLines = $('.hint-line').length;
     $(".eggzy-canvas-wrapper").bind("mousewheel", function() {
@@ -25,6 +30,12 @@ $(document).ready(function() {
     $(document).keypress(function(event) {
         if (event.which == 32)
             jumpEgg();
+    });
+    $('#pause_button').click(function() {
+        pauseMoving();
+    });
+    $('#play_button').click(function() {
+        playMoving();
     });
     initialize();
 
@@ -40,6 +51,7 @@ function init()
 {
     canvas = document.getElementById("mycanvas");
     stage = new createjs.Stage(canvas);
+    createjs.Touch.enable(stage);
     createjs.Ticker.setFPS(5000);
     initialXPosition = stage.canvas.width;
     initialYPosition = stage.canvas.height - 70;
@@ -49,10 +61,16 @@ function init()
         {id: "0", src: "img/nest.png"},
         {id: "1", src: "img/small-egg.png"},
         {id: "2", src: "img/white-egg.png"},
+        {id: "3", src: "img/Golden-Egg.png"}
     ]);
     makeEgg();
     makeNest();
     addNestToStage();
+    timeEvent = setInterval(function(event) {
+        if (!isPaused)
+            timer(event);
+
+    }, 1000);
 
 }
 /*
@@ -102,6 +120,7 @@ function makeNest()
     cont.y = initialYPosition - 50;
     cont.id = j;
     nestArr.push(cont);
+    
 }
 /*
  * Function for creating egg
@@ -143,23 +162,27 @@ function onTweenComplete()
         eggHoldingNest = eggHoldingNest + targetNest;
         eggFallingYPosition = eggFallingYPosition + 250 - 50;
         eggFallingSpeed = eggFallingSpeed + 400;
-        console.log(eggHoldingNest);
         if(eggHoldingNest==15)
         {    
             egg.y = egg.y+85;
             egg.x = egg.x+10;
         }   
         jump++;
+        if(checkIfGoldenEgg(nestArr[eggHoldingNest]))
+        score = score + 2000;
+        else
         score = score + 1000;
         $('.score-btn label').html(score);
         changeGameFinishHint();
         resetEvent();
-
+        if(eggHoldingNest==nestArr.length-1)
+            gameCompleted();
+        
     }
     else
     {
         createjs.Tween.get(egg).wait(70).to({y: eggFallingYPosition, visible: true}, eggFallingSpeed).call(fallingDownEgg);
-
+         
     }
     if (jump == 4)
     {
@@ -187,7 +210,6 @@ function addNestToStage()
     for (var i = 0; i < 16; i++)
     {
 
-        
         stage.addChild(nestArr[i]);
         //nestArr[i].cache(0, 0, 720, 5);
         var xpositionFrom = (i == 2 || i == 10 || i == 5 || i == 3 || i == 7 || i == 11) ? 0 : (nestArr[i].id == 4 || nestArr[i].id == 8 || nestArr[i].id == 12 ? canvas.width - 135 : canvas.width - 135);
@@ -204,8 +226,20 @@ function addNestToStage()
 }
 function fallingDownEgg()
 {
+    decrementLifeLine();
     egg.y = -50;
     nestArr[eggHoldingNest].addChild(egg);
+    if(goldenEggArr.indexOf(missedCount)==-1){
+    if(eggHoldingNest != nestArr.length-2)    
+    if((nestArr[eggHoldingNest+1].name == "golden_nest" || nestArr[eggHoldingNest+2].name == "golden_nest"))
+        {
+            var nest = goldenEgg.parent;
+            createjs.Tween.get(goldenEgg).to({alpha: 0, visible: false}, 100).call(function(){nest.removeChild(goldenEgg);});
+            nest.name = null;
+            goldenEggArr.splice(goldenEggArr.length-1,1);
+            
+        }
+    }   
     resetEvent();
 }
 function resetEvent()
@@ -221,25 +255,114 @@ function resetEvent()
 function checkIntersection()
 {
     var x1Diff = nestArr[eggHoldingNest + 1].x - nestArr[eggHoldingNest].x;
-    var y1Diff = nestArr[eggHoldingNest + 1].y - nestArr[eggHoldingNest].y;
+    var y1Diff = eggHoldingNest!=nestArr.length-2?nestArr[eggHoldingNest + 1].y - nestArr[eggHoldingNest].y:0;
     var x2Diff = eggHoldingNest!=nestArr.length-2?nestArr[eggHoldingNest + 2].x - nestArr[eggHoldingNest].x:0;
     var y2Diff = eggHoldingNest!=nestArr.length-2?nestArr[eggHoldingNest + 2].y - nestArr[eggHoldingNest].y:0;
-    if ((x1Diff <= 30 && x1Diff >= -30 && y1Diff <= -diffBetNest))
+    if ((x1Diff <= 30 && x1Diff >= -30) && (y1Diff == -diffBetNest || y1Diff==0))
         return 1;
-    else if ((x2Diff <= 30 && x2Diff >= -30 && y2Diff <= -diffBetNest))
+    else if ((x2Diff <= 30 && x2Diff >= -30 && y2Diff == -diffBetNest))
         return 2;
     else
         return false;
 }
+/*
+ * Function for changing the scale at right side after every succesful jump.
+ * 
+ */
 function changeGameFinishHint()
 {
     hintLines--;
-    console.log(hintLines);
     $('.hint-line').removeClass('selected-hint-line');
     $(".game-finish-hint-bar div:nth-child("+hintLines+")").addClass("selected-hint-line");
-    if(hintLines == 1)
-     {   
-        $('canvas').off('click');
-        $(document).off('keypress');
-     }
+    
+}
+/*
+ * Function for decrementing lifeline after egg is fallen.
+ */
+function decrementLifeLine()
+{
+    missedCount++;
+    $(".misscount-block div:nth-child("+missedCount+")").addClass("miss-egg");
+    if(goldenEggArr.indexOf(missedCount)!=-1 && eggHoldingNest != nestArr.length-2)
+        showGoldenEgg();
+}
+/*
+ * Funtion for updating the timer.
+ */
+function timer(event)
+{
+    timeElapsed = timeElapsed + 1;
+    var mins = Math.floor(timeElapsed / 60);
+    var sec = Math.floor(timeElapsed % 60);
+    var hrs = Math.floor(timeElapsed / 360);
+    sec = sec < 10 ? "0" + sec : sec;
+    mins = mins < 10 ? "0" + mins : mins;
+    hrs = hrs < 10 ? "0" + hrs : hrs;
+    $('#hours').html(hrs);
+    $('#mins').html(mins);
+    $('#sec').html(sec);
+}
+/*
+ * Function executed when game gets completed.
+ */
+function gameCompleted()
+{
+    $('canvas').off('click');
+    $(document).off('keypress');
+    window.clearInterval(timeEvent);
+}
+/*
+ * Function executed for showing golden egg.
+ */
+function showGoldenEgg()
+{
+    
+    goldenEgg = new createjs.Bitmap("img/Golden-Egg.png");
+    goldenEgg.x = 35;
+    goldenEgg.y = -70;
+    goldenEgg.name = "goldenegg";
+    var nest = nestArr[eggHoldingNest].y == nestArr[eggHoldingNest+1].y?2:1;
+    nestArr[eggHoldingNest+nest].addChild(goldenEgg);
+    goldenEgg.alpha = 0;
+    createjs.Tween.get(goldenEgg).to({alpha: 1, visible: true}, 300);
+    nestArr[eggHoldingNest+nest].name = "golden_nest";
+}
+/*
+ * Function executed for checking if nest contains golden egg.
+ */
+function checkIfGoldenEgg(nest)
+{
+   if(nest.name == "golden_nest")
+        {
+          createjs.Tween.get(goldenEgg).to({alpha: 0, visible: false}, 100).call(function(){nest.removeChild(goldenEgg);});
+          nest.name = null;
+          $(".misscount-block div:nth-child("+missedCount+")").removeClass("miss-egg");
+          goldenEggArr.splice(goldenEggArr.length-1,1);
+          missedCount--;
+          return true;
+        }
+    else
+    return false;
+}
+function pauseMoving()
+{
+    ispaused = true;
+    createjs.Ticker.setPaused(true);
+    window.clearInterval(timeEvent);
+    $('#pause_button').hide();
+    $('#play_button').show();
+    
+}
+function playMoving()
+{
+    $('#overlay_div').hide();
+    ispaused = false;
+    createjs.Ticker.setPaused(false);
+    start = new Date();
+    timeEvent = setInterval(function(event) {
+            timer(event);
+        }, 1000);
+    $('#play_button').hide();
+    $('#pause_button').show();
+    
 }
