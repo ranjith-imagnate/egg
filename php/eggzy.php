@@ -1,5 +1,7 @@
 <html>
     <head>
+        <meta name="viewport" content="width=device-width;" />
+        <meta name="viewport" content="initial-scale=1;  maximum-scale=1;" />   
         <link rel="stylesheet" type="text/css"  href="css/eggzy.css" />
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/createjs.min.js"></script>
@@ -47,7 +49,7 @@
                     <div class="egg"></div>
                     <div class="egg"></div>
                     <div class="egg"></div>
-                  </div>
+                </div>
             </div>
             <div class="eggzy-canvas-wrapper">
                 <div class="left-sidebar-bg"> </div>
